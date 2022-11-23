@@ -1,7 +1,7 @@
 {
   "name": "@huajianmao/crud",
   "description": "A table based crud component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.mjs",
   "umd:main": "dist/index.umd.js",
@@ -108,7 +108,7 @@
     }
   ],
   "peerDependencies": {
-    "antd": "^5",
+    "antd": "^5 || ^4",
     "classnames": "^2",
     "lodash": "^4",
     "react": "^16.8.0 || ^17 || ^18",
