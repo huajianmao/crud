@@ -46,7 +46,8 @@
     "api-extractor:ci": "node scripts/apiExtractor.js",
     "postversion": "git push && git push origin v$npm_package_version",
     "prepublishOnly": "yarn && yarn lint:fix && yarn type && yarn test && yarn build",
-    "bundlesize": "yarn build:modern && bundlesize"
+    "bundlesize": "yarn build:modern && bundlesize",
+    "start:app": "yarn build:esm && yarn link && yarn --cwd node_modules/react link && yarn --cwd ./app link react @huajianmao/crud && yarn --cwd ./app && yarn --cwd ./app run dev"
   },
   "keywords": [
     "crud",
