@@ -12,18 +12,15 @@ declare type CrudProps<T> = {
   table: CrudTable<T>;
   modal: CrudModal<T>;
   api: CrudApi<T>;
+  actions?: JSX.Element[];
 };
 
-const Crud = <T extends { id: string; children?: T[] }>({
-  title,
-  table,
-  api,
-  modal,
-}: CrudProps<T>) => {
+const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => {
+  const { title, table, modal, api, actions } = props;
   const { columns, list, button, type, show, item, onClose, onSave } = useCrud(title, table, api);
 
   return (
-    <Wrapper title={`${title}管理`} button={button}>
+    <Wrapper title={`${title}管理`} buttons={actions ? [...actions, button] : [button]}>
       <div className="w-full">
         <Table
           rowKey={table.key || 'id'}

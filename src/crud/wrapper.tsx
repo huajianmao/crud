@@ -1,19 +1,24 @@
 import React from 'react';
+import { Space } from 'antd';
 
 const Wrapper = ({
   title,
-  button,
+  buttons,
   children,
 }: {
   title: string;
-  button?: JSX.Element;
+  buttons?: JSX.Element[];
   children?: React.ReactNode;
 }) => {
   return (
     <div className="w-full h-full flex flex-col space-y-3">
       <div className="flex flex-row justify-between items-center">
         <div className="text-xl font-semibold">{title}</div>
-        {button}
+        <Space>
+          {buttons?.map((b, index) => (
+            <div key={index}>{b}</div>
+          ))}
+        </Space>
       </div>
 
       {children}

@@ -30,16 +30,17 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
   const columns = table.columns;
 
   const onDeleteItem = async (item: T) => {
-    if (api.delete) {
-      const success = await api.delete(item.id);
-      if (success) {
-        setList(list.filter((j) => item.id !== j.id));
-        message.success(`${title} 删除成功！`);
-      } else {
-        message.error(`${title} 删除失败`);
-      }
-    } else {
+    if (!api.delete) {
       message.error('删除接口未指定，请联系开发人员！');
+      return;
+    }
+
+    const success = await api.delete(item.id);
+    if (success) {
+      setList(list.filter((j) => item.id !== j.id));
+      message.success(`${title} 删除成功！`);
+    } else {
+      message.error(`${title} 删除失败`);
     }
   };
 
@@ -49,32 +50,6 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
     if (data) {
       setItem(data);
     }
-  };
-
-  const onRenderAction = (data: T) => {
-    return (
-      <Space>
-        {table?.actions && table?.actions(data)}
-        {api.update && (
-          <Button size="small" onClick={() => onAddOrEdit('edit', data)}>
-            编辑
-          </Button>
-        )}
-        {api.delete && (
-          <Popconfirm
-            title="确定删除？删除后数据将无法恢复！"
-            placement="topRight"
-            onConfirm={() => onDeleteItem(data)}
-            okText="确定"
-            cancelText="取消"
-          >
-            <Button size="small" danger>
-              删除
-            </Button>
-          </Popconfirm>
-        )}
-      </Space>
-    );
   };
 
   const onClose = () => {
@@ -108,12 +83,38 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
     return index + 1;
   };
 
+  const onRenderAction = (data: T) => {
+    return (
+      <Space>
+        {table?.actions && table?.actions(data)}
+        {api.update && (
+          <Button size="small" onClick={() => onAddOrEdit('edit', data)}>
+            编辑
+          </Button>
+        )}
+        {api.delete && (
+          <Popconfirm
+            title="确定删除？删除后数据将无法恢复！"
+            placement="topRight"
+            onConfirm={() => onDeleteItem(data)}
+            okText="确定"
+            cancelText="取消"
+          >
+            <Button size="small" danger>
+              删除
+            </Button>
+          </Popconfirm>
+        )}
+      </Space>
+    );
+  };
+
   const newColumns = [
     ...(table.tree === true
       ? []
       : [{ title: '序号', key: 'auto_id', width: 60, align: 'center', render: onRenderId }]),
     ...columns,
-    { title: '操作', key: 'action', width: 150, align: 'right', render: onRenderAction },
+    { title: '操作', key: 'action', width: 150, align: 'center', render: onRenderAction },
   ];
 
   const button = (
