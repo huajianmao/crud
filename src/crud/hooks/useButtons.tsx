@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import _ from 'lodash';
 
 import { CrudApi, CrudTable } from '../../types';
@@ -28,10 +29,14 @@ const useButtons = <T,>(
       </span>,
     );
 
-    const Comps = _.isArray(table.selection) ? table.selection : [table.selection];
-    Comps.forEach((Comp) =>
-      buttons.push(<Comp selectedKeys={selectedRowKeys} disabled={!hasSelected} />),
-    );
+    const selectionButtons = _.isArray(table.selection) ? table.selection : [table.selection];
+    selectionButtons.forEach((btn) => {
+      buttons.push(
+        <Button disabled={!hasSelected} onClick={() => btn.action(selectedRowKeys)}>
+          {btn.title}
+        </Button>,
+      );
+    });
   }
 
   if (actions) {

@@ -1,15 +1,9 @@
 import React from 'react';
 import { Space } from 'antd';
 
-const Wrapper = ({
-  title,
-  buttons,
-  children,
-}: {
-  title: string;
-  buttons?: JSX.Element[];
-  children?: React.ReactNode;
-}) => {
+const Wrapper = (props: { title: string; buttons?: JSX.Element[]; children?: React.ReactNode }) => {
+  const { title, buttons, children } = props;
+
   return (
     <div className="w-full h-full flex flex-col space-y-3">
       <div className="flex flex-row justify-between items-center">

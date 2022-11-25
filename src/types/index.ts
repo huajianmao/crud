@@ -17,12 +17,12 @@ export declare type CrudModal<T> = {
   width?: string | number;
 };
 
-declare type SelectionComp = React.FC<{ selectedKeys?: React.Key[]; disabled?: boolean }>;
+declare type SelectionButton = { title: string; action: (selectedRowKeys: React.Key[]) => void };
 declare type SearchConfig = { searchText?: string; resetText?: string; submitText?: string };
 export declare type CrudTable<T> = {
   key?: string;
   tree?: boolean;
-  selection?: SelectionComp | SelectionComp[];
+  selection?: SelectionButton | SelectionButton[];
   search?: false | SearchConfig;
   columns: any[];
   actions?: (item?: T) => JSX.Element[];

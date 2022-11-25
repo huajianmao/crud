@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Crud, CrudApi } from '@huajianmao/crud';
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
 const Home = () => {
@@ -29,11 +29,12 @@ const Home = () => {
     },
   };
 
+  const btns = [{ title: '导入体检记录', action: () => {} }];
   return (
     <div className="p-6">
       <Crud
         title="Test"
-        table={{ columns, selection: [SelectionButton, SelectionButton] }}
+        table={{ key: 'name', columns, selection: btns }}
         modal={modal}
         api={api}
       />
@@ -42,11 +43,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const SelectionButton = ({ disabled }: { selectedKeys?: React.Key[]; disabled?: boolean }) => {
-  return (
-    <Button disabled={disabled} onClick={() => {}}>
-      导入体检记录
-    </Button>
-  );
-};
