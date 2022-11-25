@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space } from 'antd';
+import { ColumnType } from 'antd/lib/table';
 
 import { CrudApi, CrudTable } from '../../types';
 import { items2tree } from '../utils';
@@ -107,14 +108,15 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
       </Space>
     );
   };
-
-  const newColumns = [
-    ...(table.tree === true
-      ? []
-      : [{ title: '序号', key: 'auto_id', width: 60, align: 'center', render: onRenderId }]),
-    ...columns,
-    { title: '操作', key: 'action', width: 150, align: 'center', render: onRenderAction },
-  ];
+  const newColumns: ColumnType<any>[] = [];
+  const autoId = { title: '序号', key: 'autoid', width: 60, align: 'center', render: onRenderId };
+  if (table.tree !== true) {
+    newColumns.push(autoId as ColumnType<any>);
+  }
+  columns.forEach((c) => newColumns.push(c));
+  if (api?.delete || api?.update) {
+    newColumns.push({ title: '操作', key: 'action', align: 'center', render: onRenderAction });
+  }
 
   const button = (
     <Button type="primary" onClick={() => onAddOrEdit('add')}>
@@ -122,17 +124,7 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
     </Button>
   );
 
-  return {
-    list, //: _.sortBy(t => t.added),
-    columns: newColumns,
-    onRenderAction,
-    item,
-    type,
-    button,
-    show,
-    onClose,
-    onSave,
-  };
+  return { list, columns: newColumns, onRenderAction, item, type, button, show, onClose, onSave };
 };
 
 export default useCrud;

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 
-import { CrudTable } from '../../types';
+import { CrudApi, CrudTable } from '../../types';
 
-const useButtons = <T,>(table: CrudTable<T>, button: JSX.Element, actions?: JSX.Element[]) => {
+const useButtons = <T,>(
+  table: CrudTable<T>,
+  button: JSX.Element,
+  actions?: JSX.Element[],
+  api?: CrudApi<T>,
+) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -28,10 +33,14 @@ const useButtons = <T,>(table: CrudTable<T>, button: JSX.Element, actions?: JSX.
       buttons.push(<Comp selectedKeys={selectedRowKeys} disabled={!hasSelected} />),
     );
   }
+
   if (actions) {
     actions.forEach((action) => buttons.push(action));
   }
-  buttons.push(button);
+
+  if (api?.create) {
+    buttons.push(button);
+  }
 
   return { rowSelection, buttons };
 };

@@ -10,6 +10,14 @@ import Wrapper from './wrapper';
 
 import './index.css';
 
+// FIXME:
+// columns:
+// =============================================================
+// valueType: 'dateRange' / 'date' / 'select' / 'textarea' / ...
+// hiddenInTable
+// search
+// formItemProps: {rules: []}
+
 declare type CrudProps<T> = {
   title: string;
   table: CrudTable<T>;
@@ -21,10 +29,10 @@ declare type CrudProps<T> = {
 const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => {
   const { title, table, modal, api, actions } = props;
   const { columns, list, button, type, show, item, onClose, onSave } = useCrud(title, table, api);
-  const { buttons, rowSelection } = useButtons(table, button, actions);
+  const { buttons, rowSelection } = useButtons(table, button, actions, api);
 
   return (
-    <Wrapper title={`${title}管理`} buttons={buttons}>
+    <Wrapper title={title ? `${title}管理` : ''} buttons={buttons}>
       <div className="w-full">
         <Table
           rowKey={table.key || 'id'}

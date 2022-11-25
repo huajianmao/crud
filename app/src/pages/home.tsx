@@ -43,13 +43,7 @@ const Home = () => {
 
 export default Home;
 
-const SelectionButton = ({
-  selectedKeys,
-  disabled,
-}: {
-  selectedKeys?: React.Key[];
-  disabled?: boolean;
-}) => {
+const SelectionButton = ({ disabled }: { selectedKeys?: React.Key[]; disabled?: boolean }) => {
   return (
     <Button disabled={disabled} onClick={() => {}}>
       导入体检记录
