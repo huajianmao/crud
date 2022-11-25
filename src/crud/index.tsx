@@ -7,6 +7,8 @@ import Edit from './edit';
 import useCrud from './useCrud';
 import Wrapper from './wrapper';
 
+import './index.css';
+
 declare type CrudProps<T> = {
   title: string;
   table: CrudTable<T>;
