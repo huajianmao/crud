@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Crud, CrudApi } from '@huajianmao/crud';
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
 const Home = () => {
   const columns: ColumnType<any>[] = [{ title: '字典名称', dataIndex: 'name', key: 'name' }];
+  const [list, setList] = useState<any[]>([]);
   const modal = {
     body: () => (
       <>
@@ -22,13 +23,36 @@ const Home = () => {
     query: async () => {
       return [] as any[];
     },
+    create: async (item: any) => {
+      setList([...list, item]);
+      return item;
+    },
   };
 
   return (
-    <div>
-      <Crud title="Test" table={{ columns }} modal={modal} api={api} />
+    <div className="p-6">
+      <Crud
+        title="Test"
+        table={{ columns, selection: [SelectionButton, SelectionButton] }}
+        modal={modal}
+        api={api}
+      />
     </div>
   );
 };
 
 export default Home;
+
+const SelectionButton = ({
+  selectedKeys,
+  disabled,
+}: {
+  selectedKeys?: React.Key[];
+  disabled?: boolean;
+}) => {
+  return (
+    <Button disabled={disabled} onClick={() => {}}>
+      导入体检记录
+    </Button>
+  );
+};

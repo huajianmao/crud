@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space } from 'antd';
 
-import { CrudApi, CrudTable } from '../types';
-
-import { items2tree } from './utils';
+import { CrudApi, CrudTable } from '../../types';
+import { items2tree } from '../utils';
 
 declare type AddOrEdit = 'add' | 'edit';
 
