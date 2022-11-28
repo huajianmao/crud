@@ -1,4 +1,4 @@
-import { store } from '../utils/store';
+import { store } from './api/local';
 
 export const cache = {
   get: <T>(key: string) => {

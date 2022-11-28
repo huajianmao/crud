@@ -3,6 +3,13 @@ import { FormInstance } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import { ColumnType } from 'antd/lib/table';
 
+export declare type CrudItem = {
+  id: string;
+  seq?: number;
+  added?: Date;
+  updated?: Date;
+};
+
 export declare type CrudApi<T> = {
   create?: (item: T) => Promise<T>;
   query?: () => Promise<T[]>;
