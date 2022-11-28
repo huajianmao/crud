@@ -3,22 +3,6 @@ import { Crud } from '@huajianmao/crud';
 import { message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
-// const CreateArchiveButton = (props: { disabled?: boolean; selectedRowKeys?: React.Key[] }) => {
-//   const { disabled, selectedRowKeys } = props;
-
-//   console.log('-------->', disabled, selectedRowKeys);
-
-//   return (
-//     <Button
-//       type="primary"
-//       disabled={disabled}
-//       onClick={() => doImportArchives(selectedRowKeys as string[])}
-//     >
-//       创建档案
-//     </Button>
-//   );
-// };
-
 const query = async () => {
   return [
     { id: '1', name: '张三', idNo: '331022198802292239' },
