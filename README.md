@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://huajianmao.github.io/crud" title="CRUD - A table based crud component">
-    <img src="https://raw.githubusercontent.com/huajianmao/crud/master/docs/logo.png" alt="XRender Logo - A table render engine both for form and display" />
+    <img src="https://raw.githubusercontent.com/huajianmao/crud/master/docs/logo.png" alt="Crud Logo - A table render engine both for form and display" />
   </a>
 </div>
 
@@ -38,7 +38,7 @@ import { Button, Form, FormInstance, Input } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { Crud } from '@huajianmao/crud';
 
-// You need to load antd's css before using xrender
+// You need to load antd's css before using crud
 import 'antd/dist/antd.css';
 
 function App() {
@@ -58,7 +58,6 @@ function App() {
   return <Crud title="字典" table={{ columns, actions }} modal={modal} api={apis} />;
 }
 ```
-
 
 ### Contributors
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { FormInstance } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 
@@ -15,6 +15,7 @@ export declare type CrudModal<T> = {
   buttons?: JSX.Element[];
   footer?: JSX.Element;
   width?: string | number;
+  style?: CSSProperties;
 };
 
 declare type SelectionButton = { title: string; action: (selectedRowKeys: React.Key[]) => void };

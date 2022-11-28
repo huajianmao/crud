@@ -48,7 +48,7 @@ const Edit = <T extends { id: string }>({
   return (
     <Modal
       width={modal.width}
-      style={{ height: '80%', maxHeight: '90vh', overflowY: 'auto' }}
+      style={modal?.style || { height: '80%', maxHeight: '90vh', overflowY: 'auto' }}
       title={modalTitle}
       open={true}
       centered

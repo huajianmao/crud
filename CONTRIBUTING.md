@@ -1,12 +1,12 @@
 # Contributing to ``
 
-As the creators and maintainers of this project, we want to ensure that `xrender` lives and continues to grow and evolve. We would like to encourage everyone to help and support this library by contributing.
+As the creators and maintainers of this project, we want to ensure that `crud` lives and continues to grow and evolve. We would like to encourage everyone to help and support this library by contributing.
 
 ## Code contributions
 
 Here is a quick guide to doing code contributions to the library.
 
-1. Fork and clone the repo to your local machine `git clone https://github.com/YOUR_GITHUB_USERNAME/xrender.git`
+1. Fork and clone the repo to your local machine `git clone https://github.com/YOUR_GITHUB_USERNAME/crud.git`
 
 2. Create a new branch from `master` with a meaningful name for a new feature or an issue you want to work on: `git checkout -b your-meaningful-branch-name`
 
@@ -38,14 +38,14 @@ Here is a quick guide to doing code contributions to the library.
 
 ## Coding style
 
-Please follow the coding style of the project. XRender uses eslint and prettier. If possible, enable their respective plugins in your editor to get real-time feedback. The linting can be run manually with the following command: `yarn lint:fix` and `yarn prettier:fix`
+Please follow the coding style of the project. Crud uses eslint and prettier. If possible, enable their respective plugins in your editor to get real-time feedback. The linting can be run manually with the following command: `yarn lint:fix` and `yarn prettier:fix`
 
 ## License
 
-By contributing your code to the xrender GitHub repository, you agree to license your contribution under the MIT license.
+By contributing your code to the crud GitHub repository, you agree to license your contribution under the MIT license.
 
 ### Contributors
 
-Thank you to all the people who have already contributed to XRender!
+Thank you to all the people who have already contributed to Crud!
 
-<img src="https://opencollective.com/xrender/contributors.svg?width=950" />
+<img src="https://opencollective.com/crud/contributors.svg?width=950" />
