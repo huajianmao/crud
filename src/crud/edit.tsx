@@ -73,7 +73,12 @@ const Edit = <T extends { id: string }>({
         <div className="w-full h-12 flex items-center justify-center">
           <div className="flex flex-row mt-6 space-x-8 items-center justify-between">
             {_.isEmpty(modal?.buttons) ? (
-              <Button type="primary" size="large" htmlType="submit">
+              <Button
+                type="primary"
+                size="large"
+                style={{ backgroundColor: '#1890ff' }}
+                htmlType="submit"
+              >
                 保存
               </Button>
             ) : (

@@ -119,7 +119,11 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
   }
 
   const button = (
-    <Button type="primary" onClick={() => onAddOrEdit('add')}>
+    <Button
+      type="primary"
+      style={{ backgroundColor: '#1890ff' }}
+      onClick={() => onAddOrEdit('add')}
+    >
       新增
     </Button>
   );
