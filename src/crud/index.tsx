@@ -28,7 +28,11 @@ declare type CrudProps<T> = {
 
 const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => {
   const { title, table, modal, api, actions } = props;
-  const { columns, list, button, type, show, item, onClose, onSave } = useCrud(title, table, api);
+  const { columns, list, button, type, show, item, onClose, onSave } = useCrud({
+    title,
+    table,
+    api,
+  });
   const { buttons, rowSelection } = useButtons(table, button, actions, api);
 
   return (

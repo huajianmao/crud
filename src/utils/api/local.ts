@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { nanoid } from 'nanoid';
 
+import { CrudApi, CrudItem } from '../../types';
+
 const delay = async (milliseconds?: number) => {
   const time = milliseconds === undefined ? _.random(100, 300) : milliseconds;
 
@@ -9,16 +11,18 @@ const delay = async (milliseconds?: number) => {
   });
 };
 
-export const crud = <T extends { id: string }>(type: string, key?: (item: T) => string) => {
-  const idKey = (item: T) => item.id;
+export const crud = <T extends CrudItem>(type: string, key?: (item: T) => string): CrudApi<T> => {
+  const idKey = (item: T) => `${item.id}`;
 
   return {
     create: async (item: T) => {
       await delay();
-      if (!item.id) {
-        item.id = nanoid(10);
+      if (item.id) {
+        alert('item should not be assigned with an id in create!');
       }
-      return store.save<T>(item, (key || idKey)(item), type);
+      item.id = nanoid(10);
+      const saved = store.save<T>(item, (key || idKey)(item), type);
+      return saved ? item.id : undefined;
     },
     get: async (id: string) => {
       await delay();
@@ -31,8 +35,8 @@ export const crud = <T extends { id: string }>(type: string, key?: (item: T) => 
     update: async (item: T, values?: { [key: string]: any }) => {
       await delay();
       const newItem: T = values ? { ...item, ...values } : item;
-      store.update<T>(newItem, (key || idKey)(newItem), type);
-      return newItem;
+      const updated = store.update<T>(newItem, (key || idKey)(newItem), type);
+      return updated ? true : false;
     },
     delete: async (id: string) => {
       await delay();
@@ -50,7 +54,7 @@ export const store = {
       .map((k) => localStorage.getItem(k))
       .filter((c) => !_.isEmpty(c))
       .map((c) => JSON.parse(c || '{}') as T);
-    return _.sortBy(result, (r) => (r as any).seq);
+    return _.sortBy(result, (r) => (r as any).createTime);
   },
   get: <T>(key: string, type: string) => {
     const data = localStorage.getItem(`${type}-${key}`);
@@ -66,6 +70,7 @@ export const store = {
   },
   update: <T>(item: T, key: string, type: string) => {
     localStorage.setItem(`${type}-${key}`, JSON.stringify(item));
+    return item;
   },
   delete: (key: string, type: string) => {
     localStorage.removeItem(`${type}-${key}`);

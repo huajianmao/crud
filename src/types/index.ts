@@ -5,15 +5,15 @@ import { ColumnType } from 'antd/lib/table';
 
 export declare type CrudItem = {
   id: string;
-  seq?: number;
-  added?: Date;
-  updated?: Date;
+  createTime?: Date;
+  updateTime?: Date;
 };
 
 export declare type CrudApi<T> = {
-  create?: (item: T) => Promise<T>;
-  query?: () => Promise<T[]>;
-  update?: (item: T) => Promise<T>;
+  create?: (item: T) => Promise<string | undefined>;
+  query?: () => Promise<T[] | undefined>;
+  get?: (id: string) => Promise<T | undefined>;
+  update?: (item: T) => Promise<boolean>;
   delete?: (id: string) => Promise<boolean>;
 };
 

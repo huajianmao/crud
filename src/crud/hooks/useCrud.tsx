@@ -2,46 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
-import { CrudApi, CrudTable } from '../../types';
+import { CrudApi, CrudItem, CrudTable } from '../../types';
 import { items2tree } from '../utils';
 
 declare type AddOrEdit = 'add' | 'edit';
 
-const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
-  title: string,
-  table: CrudTable<T>,
-  api: CrudApi<T>,
-) => {
+declare type CrudType<T> = CrudItem & { parent?: string; children?: T[] };
+declare type useCrudParamsType<T> = {
+  title: string;
+  table: CrudTable<T>;
+  api: CrudApi<T>;
+};
+const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType<T>) => {
   const [list, setList] = useState<T[]>([]);
   const [show, setShow] = useState(false);
   const [type, setType] = useState<AddOrEdit>('add');
   const [item, setItem] = useState<T>();
 
-  useEffect(() => {
-    const fetchList = async () => {
-      const flatList = api.query ? await api.query() : [];
-      const tree: T[] = items2tree(flatList);
-      setList(tree);
-    };
-
-    fetchList();
-  }, []);
-
-  const columns = table.columns;
-
-  const onDeleteItem = async (item: T) => {
-    if (!api.delete) {
-      message.error('删除接口未指定，请联系开发人员！');
-      return;
-    }
-
-    const success = await api.delete(item.id);
-    if (success) {
-      setList(list.filter((j) => item.id !== j.id));
-      message.success(`${title} 删除成功！`);
-    } else {
-      message.error(`${title} 删除失败`);
-    }
+  const fetchList = async () => {
+    const flatList = api.query && (await api.query());
+    const tree: T[] = items2tree(flatList || []);
+    setList(tree);
   };
 
   const onAddOrEdit = (type: AddOrEdit, data?: T) => {
@@ -51,6 +32,20 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
       setItem(data);
     }
   };
+
+  useEffect(() => {
+    fetchList();
+  }, []);
+
+  const button = (
+    <Button
+      type="primary"
+      style={{ backgroundColor: '#1890ff' }}
+      onClick={() => onAddOrEdit('add')}
+    >
+      新增
+    </Button>
+  );
 
   const onClose = () => {
     setShow(false);
@@ -62,25 +57,39 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
     const result = action ? await action(data) : false;
     if (!result) {
       message.error(`${title}${type === 'add' ? '添加' : '修改'}失败`);
+    } else {
+      await fetchList();
+      setShow(false);
+      setItem(undefined);
+    }
+  };
+
+  const columns = getColumns({ title, table, api, fetchList, onAddOrEdit });
+  return { list, columns, item, type, button, show, onClose, onSave };
+};
+
+export default useCrud;
+
+const getColumns = <T extends CrudType<T>>(
+  props: useCrudParamsType<T> & {
+    fetchList: () => Promise<void>;
+    onAddOrEdit: (type: AddOrEdit, data?: T) => void;
+  },
+) => {
+  const { title, table, api, fetchList, onAddOrEdit } = props;
+  const onDeleteItem = async (item: T) => {
+    if (!api.delete) {
+      message.error('删除接口未指定，请联系开发人员！');
       return;
     }
 
-    if (type === 'add') {
-      setList([...list, result]);
+    const success = await api.delete(item.id);
+    if (success) {
+      await fetchList();
+      message.success(`${title} 删除成功！`);
     } else {
-      const newList = [...list];
-      const index = newList.findIndex((item) => item.id === result.id);
-      if (index >= 0) {
-        newList[index] = result;
-      }
-      setList(newList);
+      message.error(`${title} 删除失败`);
     }
-    setShow(false);
-    setItem(undefined);
-  };
-
-  const onRenderId = (_value: any, _record: T, index: number) => {
-    return index + 1;
   };
 
   const onRenderAction = (data: T) => {
@@ -108,27 +117,20 @@ const useCrud = <T extends { id: string; parent?: string; children?: T[] }>(
       </Space>
     );
   };
+
   const newColumns: ColumnType<any>[] = [];
+  const onRenderId = (_value: any, _record: T, index: number) => {
+    return index + 1;
+  };
   const autoId = { title: '序号', key: 'autoid', width: 60, align: 'center', render: onRenderId };
   if (table.tree !== true) {
     newColumns.push(autoId as ColumnType<any>);
   }
-  columns.forEach((c) => newColumns.push(c));
+
+  table.columns.forEach((c) => newColumns.push(c));
   if (api?.delete || api?.update) {
     newColumns.push({ title: '操作', key: 'action', align: 'center', render: onRenderAction });
   }
 
-  const button = (
-    <Button
-      type="primary"
-      style={{ backgroundColor: '#1890ff' }}
-      onClick={() => onAddOrEdit('add')}
-    >
-      新增
-    </Button>
-  );
-
-  return { list, columns: newColumns, onRenderAction, item, type, button, show, onClose, onSave };
+  return newColumns;
 };
-
-export default useCrud;

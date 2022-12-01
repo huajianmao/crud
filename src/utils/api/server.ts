@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import { nanoid } from 'nanoid';
 
-import { CrudItem } from '../../types';
+import { CrudApi, CrudItem } from '../../types';
 
 const config = { host: '' };
 
@@ -9,27 +8,18 @@ export const setHost = (host: string) => {
   config.host = host;
 };
 
-export const crud = <T extends CrudItem>(type: string, key?: (item: T) => string) => {
+export const crud = <T extends CrudItem>(type: string, key?: (item: T) => string): CrudApi<T> => {
   const idKey = (item: T) => item.id;
 
   return {
     create: async (item: T) => {
-      if (!item.id) {
-        item.id = nanoid(10);
-      }
-      if (!item.added) {
-        item.added = new Date();
-      }
-      if (!item.updated) {
-        item.updated = new Date();
-      }
       const url = getUrl(type);
-      await fetch(url, {
+      const resp = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(item),
       });
-      return item;
+      return resp.ok ? await resp.json() : undefined;
     },
     get: async (id: string) => {
       const url = getUrl(type, id);
@@ -41,23 +31,23 @@ export const crud = <T extends CrudItem>(type: string, key?: (item: T) => string
       const url = getUrl(type);
       const resp = await fetch(url);
       const items = (await resp.json()) as T[];
-      return _.sortBy(items, (a) => a.seq || a.added);
+      return _.sortBy(items, (a) => a.createTime);
     },
     update: async (item: T, values?: { [key: string]: any }) => {
-      item.updated = new Date();
-      if (!item.added) {
-        item.added = new Date();
+      item.updateTime = new Date();
+      if (!item.createTime) {
+        item.createTime = new Date();
       }
       const newItem: T = values ? { ...item, ...values } : item;
 
       const id = (key || idKey)(item);
       const url = getUrl(type, id);
-      await fetch(url, {
+      const resp = await fetch(url, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newItem),
       });
-      return newItem;
+      return resp.ok;
     },
     delete: async (id: string) => {
       const url = getUrl(type, id);

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { Crud, CrudApi } from '@huajianmao/crud';
+import React from 'react';
+import { api as LocalAPI, Crud, CrudApi } from '@huajianmao/crud';
 import { Form, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
+declare type Record = {
+  id: string;
+  name: string;
+};
+
 const Home = () => {
-  const columns: ColumnType<any>[] = [{ title: '字典名称', dataIndex: 'name', key: 'name' }];
-  const [list, setList] = useState<any[]>([]);
+  const columns: ColumnType<Record>[] = [{ title: '字典名称', dataIndex: 'name', key: 'name' }];
   const modal = {
     body: () => (
       <>
@@ -19,15 +23,7 @@ const Home = () => {
       </>
     ),
   };
-  const api: CrudApi<any> = {
-    query: async () => {
-      return [] as any[];
-    },
-    create: async (item: any) => {
-      setList([...list, item]);
-      return item;
-    },
-  };
+  const api: CrudApi<Record> = LocalAPI.local.crud<Record>('record');
 
   const btns = [{ title: '导入体检记录', action: () => {} }];
   return (
