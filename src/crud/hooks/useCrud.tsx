@@ -129,7 +129,7 @@ const getColumns = <T extends CrudType<T>>(
   }
 
   table.columns.forEach((c) => newColumns.push(c));
-  if (api?.delete || api?.update) {
+  if (api?.delete || api?.update || table?.actions) {
     newColumns.push({ title: '操作', key: 'action', align: 'center', render: onRenderAction });
   }
 
