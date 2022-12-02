@@ -1,0 +1,108 @@
+[
+  {
+    "label": "一般检查",
+    "value": "yiban",
+    "children": [
+      {
+        "label": "一般检查",
+        "value": "yb.yiban",
+        "children": [
+          { "label": "身高", "value": "height", "unit": "cm" },
+          { "label": "体重", "value": "weight", "unit": "kg" },
+          { "label": "BMI", "value": "BMI", "range": { "low": 18, "up": 23 } }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "内科",
+    "value": "neike",
+    "children": [
+      { "label": "心血管系统检查", "value": "neike.xinxueguan" },
+      { "label": "呼吸系统检查", "value": "neike.huxi" },
+      { "label": "消化系统检查", "value": "neike.xiaohua" },
+      { "label": "神经系统检查", "value": "neike.shenjing" }
+    ]
+  },
+  {
+    "label": "外科",
+    "value": "waike",
+    "children": [
+      { "label": "一般检查", "value": "waike.yiban" },
+      { "label": "骨科检查", "value": "waike.guke" },
+      { "label": "泌尿系统检查", "value": "waike.miniao" },
+      { "label": "神经系统检查", "value": "waike.shenjing" }
+    ]
+  },
+  {
+    "label": "眼科",
+    "value": "yanke",
+    "children": [{ "label": "眼科检查", "value": "yanke.yanke" }]
+  },
+  {
+    "label": "耳鼻喉科",
+    "value": "耳鼻喉科",
+    "children": [{ "label": "耳鼻喉科检查", "value": "耳鼻喉科检查" }]
+  },
+  {
+    "label": "口腔科",
+    "value": "口腔科",
+    "children": [{ "label": "口腔科检查", "value": "口腔科检查" }]
+  },
+  {
+    "label": "检验科",
+    "value": "检验科",
+    "children": [
+      { "label": "血常规检查", "value": "血常规检查" },
+      { "label": "乙肝表面抗原", "value": "乙肝表面抗原" },
+      { "label": "肝功能检查", "value": "肝功能检查" },
+      { "label": "肾功能检查", "value": "肾功能检查" },
+      { "label": "血脂检查", "value": "血脂检查" },
+      { "label": "肝功五项检查", "value": "肝功五项检查" },
+      { "label": "肿瘤筛查", "value": "肿瘤筛查" },
+      { "label": "空腹血糖", "value": "空腹血糖" }
+    ]
+  },
+  {
+    "label": "输血科",
+    "value": "输血科",
+    "children": [{ "label": "梅丙艾三项检查", "value": "梅丙艾三项检查" }]
+  },
+  {
+    "label": "功能检查室",
+    "value": "功能检查室",
+    "children": [{ "label": "幽门螺旋杆菌检测", "value": "幽门螺旋杆菌检测" }]
+  },
+  {
+    "label": "临检室",
+    "value": "临检室",
+    "children": [
+      { "label": "尿液常规检查", "value": "尿液常规检查" },
+      { "label": "粪便常规检查", "value": "粪便常规检查" }
+    ]
+  },
+  {
+    "label": "体适能测试室",
+    "value": "体适能测试室",
+    "children": [{ "label": "体适能测试", "value": "体适能测试" }]
+  },
+  {
+    "label": "心电图室",
+    "value": "心电图室",
+    "children": [{ "label": "心电图检查", "value": "心电图检查" }]
+  },
+  {
+    "label": "放射科",
+    "value": "放射科",
+    "children": [{ "label": "胸部正侧位片", "value": "胸部正侧位片" }]
+  },
+  {
+    "label": "超声影像科",
+    "value": "超声影像科",
+    "children": [
+      { "label": "双肾膀胱输尿管超声", "value": "双肾膀胱输尿管超声" },
+      { "label": "肝胆脾胰超声检查", "value": "肝胆脾胰超声检查" },
+      { "label": "甲状腺超声检查", "value": "甲状腺超声检查" }
+    ]
+  }
+]

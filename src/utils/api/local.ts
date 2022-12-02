@@ -38,9 +38,9 @@ export const crud = <T extends CrudItem>(type: string, key?: (item: T) => string
       const updated = store.update<T>(newItem, (key || idKey)(newItem), type);
       return updated ? true : false;
     },
-    delete: async (id: string) => {
+    delete: async (ids: string[]) => {
       await delay();
-      store.delete(id, type);
+      ids.forEach((id) => store.delete(id, type));
       return true;
     },
   };

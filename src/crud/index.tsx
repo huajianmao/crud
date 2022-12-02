@@ -39,6 +39,7 @@ const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => 
     <Wrapper title={title ? `${title}管理` : ''} buttons={buttons}>
       <div className="w-full">
         <Table
+          onRow={table.onRow}
           rowKey={table.key || 'id'}
           rowSelection={table.selection && rowSelection}
           columns={columns}

@@ -58,6 +58,7 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
     if (!result) {
       message.error(`${title}${type === 'add' ? '添加' : '修改'}失败`);
     } else {
+      message.success(`${title}${type === 'add' ? '添加' : '修改'}成功`);
       await fetchList();
       setShow(false);
       setItem(undefined);
@@ -83,7 +84,7 @@ const getColumns = <T extends CrudType<T>>(
       return;
     }
 
-    const success = await api.delete(item.id);
+    const success = await api.delete([item.id]);
     if (success) {
       await fetchList();
       message.success(`${title} 删除成功！`);

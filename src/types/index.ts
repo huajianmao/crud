@@ -11,10 +11,10 @@ export declare type CrudItem = {
 
 export declare type CrudApi<T> = {
   create?: (item: T) => Promise<string | undefined>;
-  query?: () => Promise<T[] | undefined>;
+  query?: (params?: { [key: string]: any }) => Promise<T[] | undefined>;
   get?: (id: string) => Promise<T | undefined>;
   update?: (item: T) => Promise<boolean>;
-  delete?: (id: string) => Promise<boolean>;
+  delete?: (ids: string[]) => Promise<boolean>;
 };
 
 export declare type CrudModal<T> = {
@@ -32,6 +32,7 @@ declare type SearchConfig = { searchText?: string; resetText?: string; submitTex
 export declare type CrudTable<T> = {
   key?: string;
   tree?: boolean;
+  onRow?: (record: T, rowIndex?: number) => { onClick?: (event: any) => void };
   // selection: add action buttons for selected items on the top right of the table next to the actions buttons
   selection?: SelectionButton | SelectionButton[];
   search?: false | SearchConfig;
