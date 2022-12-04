@@ -25,12 +25,14 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
     setList(tree);
   };
 
-  const onAddOrEdit = (type: AddOrEdit, data?: T) => {
+  const onAddOrEdit = async (type: AddOrEdit, data?: T) => {
+    if (type === 'edit') {
+      const fetched = data?.id !== undefined && api.get && (await api.get(data?.id));
+      setItem(fetched || data);
+    }
+
     setShow(true);
     setType(type);
-    if (data) {
-      setItem(data);
-    }
   };
 
   useEffect(() => {
