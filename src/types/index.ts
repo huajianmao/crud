@@ -28,14 +28,20 @@ export declare type CrudModal<T> = {
 };
 
 declare type SelectionButton = { title: string; action: (selectedRowKeys: React.Key[]) => void };
-declare type SearchConfig = { searchText?: string; resetText?: string; submitText?: string };
+declare type SearchConfig<T> = {
+  searchText?: string;
+  resetText?: string;
+  submitText?: string;
+  filter?: (value: string, item: T) => boolean;
+};
 export declare type CrudTable<T> = {
   key?: string;
   tree?: boolean;
+  pagination?: object | false;
   onRow?: (record: T, rowIndex?: number) => { onClick?: (event: any) => void };
   // selection: add action buttons for selected items on the top right of the table next to the actions buttons
   selection?: SelectionButton | SelectionButton[];
-  search?: false | SearchConfig;
+  search?: SearchConfig<T>;
   columns: ColumnType<T>[];
   // actions: add action buttons on top right of the table
   actions?: (item?: T) => JSX.Element[];

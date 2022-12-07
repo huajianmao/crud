@@ -2,6 +2,7 @@ import React from 'react';
 import { Crud } from '@huajianmao/crud';
 import { message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
+import _ from 'lodash';
 
 const query = async () => {
   return [
@@ -26,7 +27,15 @@ const Selection = () => {
     <div className="p-10">
       <Crud
         title=""
-        table={{ columns, selection: imoprtButton }}
+        table={{
+          columns,
+          selection: imoprtButton,
+          search: {
+            filter: (value, item: Archive) => {
+              return _.get(item, 'name').includes(value?.trim());
+            },
+          },
+        }}
         modal={{ body: () => <></> }}
         api={{ query }}
       />

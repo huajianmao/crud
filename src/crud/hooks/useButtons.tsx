@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 import { Button } from 'antd';
 import _ from 'lodash';
 
-import { CrudApi, CrudTable } from '../../types';
+import { CrudTable } from '../../types';
 
-const useButtons = <T,>(
-  table: CrudTable<T>,
-  button: JSX.Element,
-  actions?: JSX.Element[],
-  api?: CrudApi<T>,
-) => {
+const useButtons = <T,>(table: CrudTable<T>, button: JSX.Element[], actions?: JSX.Element[]) => {
   const buttons = [];
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -41,9 +36,7 @@ const useButtons = <T,>(
     actions.forEach((action) => buttons.push(action));
   }
 
-  if (api?.create) {
-    buttons.push(button);
-  }
+  button.forEach((b) => buttons.push(b));
 
   return { rowSelection, buttons };
 };

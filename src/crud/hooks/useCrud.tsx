@@ -3,6 +3,7 @@ import { Button, message, Popconfirm, Space } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 
 import { CrudApi, CrudItem, CrudTable } from '../../types';
+import SearchButton from '../components/search';
 import { items2tree } from '../utils';
 
 declare type AddOrEdit = 'add' | 'edit';
@@ -39,15 +40,42 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
     fetchList();
   }, []);
 
-  const button = (
-    <Button
-      type="primary"
-      style={{ backgroundColor: '#1890ff' }}
-      onClick={() => onAddOrEdit('add')}
-    >
-      新增
-    </Button>
-  );
+  const button: JSX.Element[] = [];
+  if (table?.search?.filter !== undefined) {
+    button.push(
+      <SearchButton
+        onSearch={(value: string) => {
+          setList(
+            list.filter((item) =>
+              table.search?.filter === undefined ? true : table.search?.filter(value, item),
+            ),
+          );
+        }}
+        onReset={fetchList}
+      />,
+    );
+  }
+
+  if (api?.query) {
+    button.push(
+      <Button key="refresh" onClick={fetchList}>
+        刷新
+      </Button>,
+    );
+  }
+
+  if (api?.create) {
+    button.push(
+      <Button
+        key="add"
+        type="primary"
+        style={{ backgroundColor: '#1890ff' }}
+        onClick={() => onAddOrEdit('add')}
+      >
+        新增
+      </Button>,
+    );
+  }
 
   const onClose = () => {
     setShow(false);

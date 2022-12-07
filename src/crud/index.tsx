@@ -33,7 +33,7 @@ const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => 
     table,
     api,
   });
-  const { buttons, rowSelection } = useButtons(table, button, actions, api);
+  const { buttons, rowSelection } = useButtons(table, button, actions);
 
   return (
     <Wrapper title={title ? `${title}管理` : ''} buttons={buttons}>
@@ -42,9 +42,11 @@ const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => 
           onRow={table.onRow}
           rowKey={table.key || 'id'}
           rowSelection={table.selection && rowSelection}
+          pagination={
+            table.pagination !== undefined && table.pagination !== false && table.pagination
+          }
           columns={columns}
           dataSource={list}
-          pagination={false}
           size="middle"
           bordered
           expandable={{
