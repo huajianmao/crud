@@ -16,6 +16,7 @@ declare type useCrudParamsType<T> = {
 };
 const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType<T>) => {
   const [list, setList] = useState<T[]>([]);
+  const [filtered, setFiltered] = useState<T[]>(list);
   const [show, setShow] = useState(false);
   const [type, setType] = useState<AddOrEdit>('add');
   const [item, setItem] = useState<T>();
@@ -25,6 +26,14 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
     const tree: T[] = items2tree(flatList || []);
     setList(tree);
   };
+
+  useEffect(() => {
+    fetchList();
+  }, []);
+
+  useEffect(() => {
+    setFiltered(list);
+  }, [list]);
 
   const onAddOrEdit = async (type: AddOrEdit, data?: T) => {
     if (type === 'edit') {
@@ -36,23 +45,10 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
     setType(type);
   };
 
-  useEffect(() => {
-    fetchList();
-  }, []);
-
   const button: JSX.Element[] = [];
   if (table?.search?.filter !== undefined) {
     button.push(
-      <SearchButton
-        onSearch={(value: string) => {
-          setList(
-            list.filter((item) =>
-              table.search?.filter === undefined ? true : table.search?.filter(value, item),
-            ),
-          );
-        }}
-        onReset={fetchList}
-      />,
+      <SearchButton data={list} filter={table?.search?.filter} setResult={setFiltered} />,
     );
   }
 
@@ -96,7 +92,7 @@ const useCrud = <T extends CrudType<T>>({ title, table, api }: useCrudParamsType
   };
 
   const columns = getColumns({ title, table, api, fetchList, onAddOrEdit });
-  return { list, columns, item, type, button, show, onClose, onSave };
+  return { filtered, columns, item, type, button, show, onClose, onSave };
 };
 
 export default useCrud;

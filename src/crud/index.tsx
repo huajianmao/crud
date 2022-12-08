@@ -28,7 +28,7 @@ declare type CrudProps<T> = {
 
 const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => {
   const { title, table, modal, api, actions } = props;
-  const { columns, list, button, type, show, item, onClose, onSave } = useCrud({
+  const { columns, filtered, button, type, show, item, onClose, onSave } = useCrud({
     title,
     table,
     api,
@@ -46,7 +46,7 @@ const Crud = <T extends { id: string; children?: T[] }>(props: CrudProps<T>) => 
             table.pagination !== undefined && table.pagination !== false && table.pagination
           }
           columns={columns}
-          dataSource={list}
+          dataSource={filtered}
           size="middle"
           bordered
           expandable={{
