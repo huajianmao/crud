@@ -134,6 +134,7 @@ const getColumns = <T extends CrudType<T>>(
             placement="topRight"
             onConfirm={() => onDeleteItem(data)}
             okText="确定"
+            okButtonProps={{ style: { backgroundColor: '#1890ff' } }}
             cancelText="取消"
           >
             <Button size="small" danger>
