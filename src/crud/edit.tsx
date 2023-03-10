@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Modal } from 'antd';
+import { Button, Form } from 'antd';
 import _ from 'lodash';
 
 import { CrudModal } from '../types';
+
+import Modal from './components/Modal';
 
 declare type EditProps<T> = {
   title: string;
@@ -46,17 +48,7 @@ const Edit = <T extends { id: string }>({
   };
 
   return (
-    <Modal
-      width={modal.width}
-      style={modal?.style || { height: '80%', maxHeight: '90vh', overflowY: 'auto' }}
-      title={modalTitle}
-      open={true}
-      centered
-      onCancel={handleCancel}
-      maskClosable={false}
-      destroyOnClose={true}
-      footer={false}
-    >
+    <Modal width={modal.width} style={modal?.style} title={modalTitle} onCancel={handleCancel}>
       <Form
         className="w-full h-full flex flex-col"
         labelCol={{ span: 6 }}
