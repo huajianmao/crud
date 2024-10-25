@@ -10,7 +10,7 @@ declare type EditProps<T> = {
   title: string;
   type: 'add' | 'edit';
   onClose: () => void;
-  onSave: (data: T) => void;
+  onSave: (data: T) => Promise<void>;
   modal: CrudModal<T>;
   initialValues?: T;
 };
@@ -40,8 +40,8 @@ const Edit = <T extends { id: string }>({
     }
   };
 
-  const handleSave = () => {
-    onSave(form.getFieldsValue(true));
+  const handleSave = async () => {
+    await onSave(form.getFieldsValue(true));
     if (modal?.setForm) {
       modal.setForm(undefined);
     }
